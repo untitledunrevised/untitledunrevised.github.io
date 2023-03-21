@@ -6,11 +6,16 @@
 -->
 <html>
 	<head>
-		<title>Forty by HTML5 UP</title>
+		<title>Generic - Forty by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+			onload="renderMathInElement(document.body);"></script>
 	</head>
 	<body class="is-preload">
 
@@ -18,7 +23,7 @@
 			<div id="wrapper">
 
 				<!-- Header -->
-					<header id="header" class="alt">
+					<header id="header">
 						<a href="index.html" class="logo"><strong>Forty</strong> <span>by HTML5 UP</span></a>
 						<nav>
 							<a href="#menu">Menu</a>
@@ -32,45 +37,40 @@
 						</ul>
 					</nav>
 
-				<!-- Banner -->
-					<section id="banner" class="major">
-						<div class="inner">
-							<header class="major">
-								<h1>Hello, this is Untitled_unrevised</h1>
-							</header>
-							<div class="content">
-								<p>This is a simple sheet, the beginning of my dream.</p>
-								<ul class="actions">
-									<li><a href="#one" class="button next scrolly">Get Started</a></li>
-								</ul>
-							</div>
-						</div>
-					</section>
-
 				<!-- Main -->
-					<div id="main">
+					<div id="main" class="alt">
 
 						<!-- One -->
-							<section id="one" class="tiles">
-								<article>
-									<span class="image">
-										<img src="images/pic05.jpg" alt="" />
-									</span>
-									<header class="major">
-										<h3><a href="inverse_pair.html" class="link">逆序对</a></h3>
-										<p>逆序对的定义，求解逆序对的数量</p>
-									</header>
-								</article>
-							</section>
-
-						<!-- Two -->
-							<section id="two">
+							<section id="one">
 								<div class="inner">
 									<header class="major">
-										<h2>写在最后</h2>
+										<h1>逆序对</h1>
 									</header>
-									<p>此网站还在建设当中，我的水平还是相当有限，可能最后也出不了什么非常华丽的成果。但我想试试。</p>
-									<p>特别感谢 cdwcgt 告诉了我这么漂亮的模板，也让我对着这样的模板就能直接上手 www</p>
+									<p>本文主要介绍逆序对的定义，和一些求解逆序对数量的方法。</p>
+									<h2>定义</h2>
+									<p>对于一个序列 $\left< a_n \right>$，**逆序对** 是满足下列条件的二元组 $(i, j)$：</p>
+									<p>
+										$$
+										\begin{aligned}
+										i &< j
+										\\
+										a_i &> a_j
+										\end{aligned}
+										$$
+									</p>
+									<p>由上述定义可知，满足下列条件的二元组 $(i, j)$ 也是逆序对：</p>
+									<p>
+										$$
+										\begin{aligned}
+										i &> j
+										\\
+										a_i &< a_j
+										\end{aligned}
+										$$
+									</p>
+									<h2>基于排序算法的求解逆序对数量的方法</h2>
+									<p>逆序对与排序算法密切相关。具体地，排序算法所做的事情本质就是：通过重排序列 $\left< a_n \right>$ 的所有元素的位置，使得该序列的逆序对数量为 $0$。</p>
+									<p>注意，如果一个排序算法不是稳定的，则该算法很可能无法求解逆序对数量。</p>
 								</div>
 							</section>
 
