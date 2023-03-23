@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>逆序对 - untitledunrevised</title>
+		<title>Generic - untitledunrevised</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -59,51 +59,12 @@
 							<section id="one">
 								<div class="inner">
 									<header class="major">
-										<h1>逆序对</h1>
+										<h1>Generic</h1>
 									</header>
-									<p>本文主要介绍逆序对的定义，和一些求解逆序对数量的方法。</p>
-									<h2>定义</h2>
-									<p>对于一个序列 $\left< a_n \right>$，<strong>逆序对</strong> 是满足下列条件的二元组 $(i, j)$：</p>
-									<p>
-										$$
-										\begin{aligned}
-										i &< j
-										\\
-										a_i &> a_j
-										\end{aligned}
-										$$
-									</p>
-									<p>由上述定义可知，满足下列条件的二元组 $(i, j)$ 也是逆序对：</p>
-									<p>
-										$$
-										\begin{aligned}
-										i &> j
-										\\
-										a_i &< a_j
-										\end{aligned}
-										$$
-									</p>
-									<h2>排序算法求解逆序对数量</h2>
-									<p>逆序对与排序算法密切相关。具体地，排序算法所做的事情本质就是：通过重排序列 $\left< a_n \right>$ 的所有元素的位置，使得该序列的逆序对数量为 $0$。</p>
-									<p>注意，如果一个排序算法不是稳定的，则该算法无法求解逆序对数量。</p>
-									<h3>基于比较的排序算法求解逆序对数量</h3>
-									<p>本节介绍一些基于比较的排序算法求解逆序对数量的方法。</p>
-									<h4>冒泡排序求解逆序对问题</h4>
-									<div class="col-4 col-12-small">
-										<input type="radio" id="known-bubble-sort" name="ifknown-bubble-sort" checked>
-										<label for="known-bubble-sort">我知道什么是冒泡排序</label>
-									</div>
-									<div class="col-4 col-12-small">
-										<input type="radio" id="unknown-bubble-sort" name="ifknown-bubble-sort">
-										<label for="unknown-bubble-sort">我不知道什么是冒泡排序</label>
-									</div>
-									<p>根据冒泡排序的算法流程，对于一个序列 $\left< a_n \right>$，当找到了一个逆序对 $(i, i+1)$ 时，算法将交换元素 $a_i$ 和 $a_{i+1}$ 的位置。</p>
-									<p>在此基础上，每找到这样一个逆序对时，就统计一次。</p>
-									<p>冒泡排序结束后，统计出来的就是原序列的逆序对数量。</p>
-									<h4>插入排序求解逆序对问题</h4>
-									<p>根据插入排序的算法流程，对于一个序列 $\left< a_n \right>$，当找到了一个逆序对 $(i-1, i)$ 时，算法将交换元素 $a_{i-1}$ 和 $a_i$ 的位置。</p>
-									<p>在此基础上，每找到这样一个逆序对时，就统计一次。</p>
-									<p>插入排序结束后，统计出来的就是原序列的逆序对数量。</p>
+									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+									<p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
 								</div>
 							</section>
 

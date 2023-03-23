@@ -1,0 +1,270 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>下降幂多项式 - untitledunrevised</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+		integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+		integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+		crossorigin="anonymous"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+		integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+		crossorigin="anonymous"></script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			renderMathInElement(document.body, {
+				// customised options
+				// auto-render specific keys, e.g.:
+				delimiters: [
+					{ left: '$$', right: '$$', display: true },
+					{ left: '$', right: '$', display: false },
+					{ left: '\\(', right: '\\)', display: false },
+					{ left: '\\[', right: '\\]', display: true }
+				],
+				// rendering keys, e.g.:
+				throwOnError: false
+			});
+		});
+	</script>
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+			<nav>
+				<a href="#menu">Menu</a>
+			</nav>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<ul class="links">
+				<li><a href="index.html">Home</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main" class="alt">
+
+			<!-- One -->
+			<section id="one">
+				<div class="inner">
+					<header class="major">
+						<h1>下降幂多项式</h1>
+					</header>
+					<p>考虑这样一个问题：已知有 $n+1$ 个点 $(x_k, y_k)$，其中 $x_k = k$ 且 $k \in \{0, 1, 2, \cdots, n\}$，求一个最高 $n$ 次的多项式
+						$f(x)$ 使得对于所有的 $k$ 都有 $y_k = f(x_k)$ 成立。</p>
+					<p>这个问题意义非常重大。许多工程中经常会遇到这样一类点值数据，相邻两个点的 $\Delta x$
+						是相同的。如果使用多项式去拟合这些点，那么通过一定的转换，这个问题就可以归约到上述的问题。因此追求一种非常高效的算法来解决上述问题就显得尤为重要。</p>
+					<h2>确定多项式的形式</h2>
+					<h3>普通多项式</h3>
+					<p>最直接的想法，是使用待定系数法。首先假设：</p>
+					<p>$$
+						f(x) = a_0 + a_1x + a_2x^2 + \cdots + a_nx^n
+						$$</p>
+					<p>然后将 $n+1$ 个点值 $(x_k, y_k)$ 逐一带进去，得到 $n+1$ 条方程：</p>
+					<p>$$
+						\begin{aligned}
+						y_0 &amp;= a_0 + a_1x_0 + a_2x_0^2 + \cdots + a_nx_0^n \\
+						y_1 &amp;= a_0 + a_1x_1 + a_2x_1^2 + \cdots + a_nx_1^n \\
+						y_2 &amp;= a_0 + a_1x_2 + a_2x_2^2 + \cdots + a_nx_2^n \\
+						&amp;\dots \\
+						y_n &amp;= a_0 + a_1x_n + a_2x_n^2 + \cdots + a_nx_n^n \\
+						\end{aligned}
+						$$</p>
+					<p>用矩阵来表示的话就是：</p>
+					<p>$$
+						\begin{bmatrix}
+						y_0 \\ y_1 \\ y_2 \\ \vdots \\ y_n
+						\end{bmatrix}
+						=
+						\begin{bmatrix}
+						1 &amp; x_0 &amp; x_0^2 &amp; \cdots &amp; x_0^n \\
+						1 &amp; x_1 &amp; x_1^2 &amp; \cdots &amp; x_1^n \\
+						1 &amp; x_2 &amp; x_2^2 &amp; \cdots &amp; x_2^n \\
+						\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+						1 &amp; x_n &amp; x_n^2 &amp; \cdots &amp; x_n^n \\
+						\end{bmatrix}
+						\begin{bmatrix}
+						a_0 \\ a_1 \\ a_2 \\ \vdots \\ a_n
+						\end{bmatrix}
+						$$</p>
+					<p>于是问题转换成求解 $n+1$ 元一次方程，使用消元法可以在 $O(n^3)$ 的时间复杂度内完成。但显然我们不满足于此，原因如下：</p>
+					<ol>
+						<li>$O(n^3)$ 的时间复杂度太过巨大；</li>
+						<li>该方法没用上 $x_k = k$ 这一性质。</li>
+					</ol>
+					<p>并且在高斯消元法中，首先执行的操作是将原始矩阵转换为三角矩阵。如果通过一定的方法直接生成三角矩阵，则可以降低常数，且易于研究。</p>
+					<h3>下降幂与下降幂多项式</h3>
+					<p>已知 $x_0 = 0$，那么其实，第 $0$ 条方程只不过是 $y_0 = a_0$ 而已，非常非常简单。</p>
+					<p>难的是从 $x_k = k \ge 1$ 开始，第 $k$ 条方程就已经变成了 $y_k = a_0 + a_1k + a_2k^2 + \cdots + a_nk^n$
+						这样一长串。因此，需要一种方法使得该方程只使用前 $k$ 个系数，这要求重新定义 $f(x)$ 的形式。</p>
+					<p>使第 $0$ 条方程那么简短，其实最大的原因，是常数 $0$ 的威力：一个乘法的式子里只要出现了 $0$，这个式子的结果就是 $0$：</p>
+					<p>$$
+						y_0 = a_0 \color{grey} + 0a_1 + 0^2a_2 + \cdots + 0^na_n
+						$$</p>
+					<p>那么考虑一个 $k$ 次的多项式 $g_k(x)$，我们希望：</p>
+					<ul>
+						<li>如果 $x \in \{0, 1, 2, \dots, k - 1\}$，那么 $g_k(x) = 0$；</li>
+						<li>如果 $x \ge k$，那么 $g_k(x) \not = 0$。</li>
+					</ul>
+					<p>如果这样的多项式存在，那么通过重新定义 $f(x)$ 的形式：</p>
+					<p>$$
+						f(x) = a_0g_0(x) + a_1g_1(x) + a_2g_2(x) + \cdots + a_ng_n(x) = \sum_{k = 0}^{n} a_kg_k(x)
+						$$</p>
+					<p>就可以在带入 $(x_k, y_k)$ 的时候，只出现前 $k$ 项，达到我们想要的：</p>
+					<p>$$
+						\begin{aligned}
+						y_0 &amp;= f(0) = a_0g_0(0) \color{grey} + a_1g_1(0) + a_2g_2(0) + \cdots \\
+						y_1 &amp;= f(1) = a_0g_0(1) + a_1g_1(1) \color{grey} + a_2g_1(1) + \cdots \\
+						y_2 &amp;= f(2) = a_0g_0(2) + a_1g_1(2) + a_2g_2(2) \color{grey} + \cdots \\
+						&amp;\dots \\
+						\end{aligned}
+						$$</p>
+					<p>思考一下吧，$g_k(x)$ 应该是什么。</p>
+					<hr>
+					<p>答案：</p>
+					<p>定义<underline>下降幂</underline> $x^{\underline k}$ 为：</p>
+					<p>$$
+						x^{\underline k} = \begin{cases}
+						x(x - 1)(x - 2)\dots(x - (k - 1)) &amp; \text{if } k &gt; 0 \\
+						1 &amp; \text{if } k = 0
+						\end{cases}
+						$$</p>
+					<p>可以验证，这样的多项式已经能满足上述两个要求，且确实是一个 $k$ 次多项式。不过，还可以定义出 $g_k(x)$ 更一般的形式：</p>
+					<p>$$
+						g_k(x) = Cx^{\underline k}
+						$$</p>
+					<p>其中 $C \not = 0$，我们后面再根据需要使用它。不过就现在，我们先令 $g_k(x) = x^{\underline k}$，那么 $f(x)$ 就表示为：</p>
+					<p>$$
+						f(x) = a_0x^{\underline 0} + a_1x^{\underline 1} + a_2x^{\underline 2} + \cdots +
+						a_nx^{\underline n} = \sum_{k = 0}^{n} a_kx^{\underline k}
+						$$</p>
+					<p>称这样的多项式为<underline>下降幂多项式</underline>。</p>
+					<h3>添加额外的系数</h3>
+					<p>现在我们有了新的 $f(x)$ 的形式，往里面带值试试看：</p>
+					<p>$$
+						\begin{aligned}
+						y_0 &amp;= f(0) = a_0 \\
+						y_1 &amp;= f(1) = a_0 + a_1 \\
+						y_2 &amp;= f(2) = a_0 + 2a_1 + 2a_2 \\
+						y_3 &amp;= f(3) = a_0 + 3a_1 + 6a_2 + 6a_3 \\
+						&amp;\dots \\
+						\end{aligned}
+						$$</p>
+					<p>目的是达到了，但是……这些系数看着有点尴尬，是一坨不好找规律的系数……</p>
+					<p>再看一眼我们选的 $g_k(x) = x^{\underline k}$，可以发现，当 $x$ 为非负整数时，$x^{\underline k}$ 其实就是排列数：</p>
+					<p>$$
+						x^{\underline k} = A_{x}^{k} = \frac{x!}{(x - k)!}
+						$$</p>
+					<p>排列数本身没毛病，但是用的更多的其实是组合数：</p>
+					<p>$$
+						\binom{x}{k} = C_{x}^{k} = \frac{x^{\underline k}}{k!} = \frac{A_{x}^{k}}{k!} =
+						\frac{x!}{k!(x-k)!}
+						$$</p>
+					<blockquote>
+						以后你在其它地方看见 $\binom n m$ 这个符号，它大概率就是组合数符号，而且是比 $C_n^m$ 更常用的符号。
+					</blockquote>
+					<p>那么现在，把 $g_k(x)$ 换成 $\dfrac{x^{\underline k}}{k!}$ 吧，再改一下 $f(x)$ 的形式：</p>
+					<p>$$
+						f(x) = \frac{a_0x^{\underline 0}}{0!} + \frac{a_1x^{\underline 1}}{1!} + \frac{a_2x^{\underline
+						2}}{2!} + \cdots + \frac{a_nx^{\underline n}}{n!} = \sum_{k = 0}^{n} \frac{a_kx^{\underline
+						k}}{k!}
+						$$</p>
+					<p>再往里面带值试试看：</p>
+					<p>$$
+						\begin{aligned}
+						y_0 &amp;= f(0) = a_0 \\
+						y_1 &amp;= f(1) = a_0 + a_1 \\
+						y_2 &amp;= f(2) = a_0 + 2a_1 + a_2 \\
+						y_3 &amp;= f(3) = a_0 + 3a_1 + 3a_2 + a_3 \\
+						&amp;\dots \\
+						y_k &amp;= f(k) = \sum_{i = 0}^{k} \binom{k}{i}a_i
+						\end{aligned}
+						$$</p>
+					<p>这下很清楚了吧，熟悉的二项式变换。</p>
+					<p>回到最开始的问题，已知的是 $y_0, y_1, y_2, \cdots, y_n$，要求的是 $a_0, a_1, a_2, \cdots, a_n$。</p>
+					<p>那么就使用二项式反演：</p>
+					<p>$$
+						\begin{aligned}
+						a_0 &amp;= y_0 \\
+						a_1 &amp;= -y_0 + y_1 \\
+						a_2 &amp;= y_0 - 2y_1 + y_2 \\
+						a_3 &amp;= -y_0 + 3y_1 - 3y_2 + y_3 \\
+						&amp;\dots \\
+						a_k &amp;= \sum_{i = 0}^{k} \binom{k}{i}(-1)^{k-i}y_i
+						\end{aligned}
+						$$</p>
+					<p>可以在 $O(n \log n)$ 的时间复杂度内完成从序列 $\left&lt;y_n\right&gt;$ 到序列 $\left&lt;a_n\right&gt;$ 的变换，从而我们有了在
+						$O(n \log n)$ 解决原问题的方法。</p>
+					<h2>写在最后</h2>
+					<p>本页面还将继续更新。</p>
+					<p>未解释完全的内容（TO-DO List）：</p>
+					<ol>
+						<li>二项式变换和二项式反演的原理及算法实现</li>
+						<li>下降幂多项式到普通多项式的转换</li>
+					</ol>
+				</div>
+			</section>
+
+		</div>
+
+		<!-- Contact -->
+		<section id="contact">
+			<div class="inner">
+				<section>
+					<div class="contact-method">
+						<span class="icon solid alt fa-envelope"></span>
+						<h3>Email</h3>
+						<span>348070954@qq.com</span>
+					</div>
+				</section>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<ul class="icons">
+					<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span
+								class="label">GitHub</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Untitled_unrevised</li>
+					<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
