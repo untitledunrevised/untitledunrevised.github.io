@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+    <title>多项式平移 - untitledunrevised</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript>
+        <link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+        crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true }
+                ],
+                // rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+            <nav>
+                <a href="#menu">Menu</a>
+            </nav>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <ul class="links">
+                <li><a href="index.html">Home</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <div id="main" class="alt">
+
+            <!-- One -->
+            <section id="one">
+                <div class="inner">
+                    <header class="major">
+                        <h1>多项式平移</h1>
+                    </header>
+                    <p>给定一个数 $c$ 和一个 $n$ 次的多项式：</p>
+                    <p>$$
+                        f(x) = a_0 + a_1x + a_2x^2 + \cdots + a_nx^n
+                        $$</p>
+                    <p>求 $f(x + c)$ 的展开形式：</p>
+                    <p>$$
+                        f(x + c) = b_0 + b_1x + b_2x^2 + \cdots + b_nx^n
+                        $$</p>
+                    <h2>推导</h2>
+                    <p>单独展开每一项：</p>
+                    <p>$$
+                        \begin{aligned}
+                        a_m(x + c)^m &amp;= \binom m 0 a_m c^m + \binom m 1 a_m c^{m-1}x + \binom m 2 a_m
+                        c^{m-2}x^2 + \cdots + \binom m m a_m x^m \\
+                        &amp;= \sum_{k = 0}^{m} \binom m k a_m c^{m-k}x^k
+                        \end{aligned}
+                        $$</p>
+                    <blockquote>
+                        以后你在其它地方看见 $\binom n m$
+                        这个符号，它大概率就是组合数符号，而且是比 $C_n^m$ 更常用的符号。
+                    </blockquote>
+                    <p>所有项合起来一起看：</p>
+                    <p>$$
+                        \begin{aligned}
+                        a_0 &amp;= \binom 0 0 a_0 \\
+                        a_1(x + c) &amp;= \binom 1 0 a_1 c + \binom 1 1 a_1 x \\
+                        a_2(x + c)^2 &amp;= \binom 2 0 a_2 c^2 + \binom 2 1 a_2 cx + \binom 2 2 a_2 x^2 \\
+                        &amp;\dots \\
+                        a_m(x + c)^m &amp;= \binom m 0 a_m c^m + \binom m 1 a_m c^{m-1}x + \binom m 2 a_m
+                        c^{m-2}x^2 + \cdots + \binom m m a_m x^m \\
+                        \end{aligned}
+                        $$</p>
+                    <blockquote>
+                        如果你对 $\binom 0 0$ 感到奇怪，它的值是 $1$。
+                    </blockquote>
+                    <p>因此 $f(x + c)$ 的展开式中，$x^k$ 的系数 $b_k$
+                        为：</p>
+                    <p>$$
+                        \begin{aligned}
+                        b_k &amp;= \binom{k}{k}a_k + \binom{k+1}{k}a_{k+1}c + \binom{k+2}{k}a_{k+2}c^2 + \cdots +
+                        \binom{n}{k}a_nc^{n-k} \\
+                        &amp;= \sum_{m = k}^{n} \binom{m}{k}a_mc^{m-k} \\
+                        &amp;= \sum_{m = k}^{n} \bigg[\frac{m!}{k!(m-k)!}a_mc^{m-k}\bigg]
+                        \end{aligned}
+                        $$</p>
+                    <p>把等式中分别使用 $k$，$m$，$m-k$ 的部分分离开来：</p>
+                    <p>$$
+                        b_k k! = \sum_{m = k}^{n} \bigg[m! a_m \times\frac{c^{m-k}}{(m-k)!}\bigg]
+                        $$</p>
+                    <p>该卷积可以在 $O(n \log n)$ 的时间内完成。</p>
+                    <div class="box">
+                        <p>如果你没见过使用 $m$ 和 $m-k$
+                            为下标的卷积，下面是补充说明：</p>
+                        <p>首先构造两个部分使用的序列的普通生成函数：</p>
+                        <p>$$
+                            \begin{aligned}
+                            g(x) &amp;= a_0 + 1!a_1x + 2!a_2x^2 + \cdots + n!a_nx^n \\
+                            &amp;= \sum_{m=0}^{n} m! a_m x^m \\
+                            h(x) &amp;= 1 + \frac{c}{1!}x + \frac{c^2}{2!}x^2 + \cdots +
+                            \frac{c^n}{n!}x^n
+                            \\
+                            &amp;= \sum_{r=0}^{n} \frac{c^r}{r!}x^r
+                            \end{aligned}
+                            $$</p>
+                        <!--blockquote>
+                            $h(x)$ 是 $e^x$ 的 $n$ 次项麦克劳林展开。
+                        </blockquote-->
+                        <p>为了达到做差的效果，考虑往 $h(x)$ 带入 $x^{-1}$
+                            将其所使用的序列左右翻转：</p>
+                        <p>$$
+                            \begin{aligned}
+                            h\big(x^{-1}\big) &amp;= \frac{c^n}{n!}x^{-n} + \cdots +
+                            \frac{c^2}{2!}x^{-2} + \frac{c}{1!}x^{-1} + 1 \\
+                            &amp;= \sum_{r=0}^{n} \frac{c^r}{r!}x^{-r}
+                            \end{aligned}
+                            $$</p>
+                        <p>现在，观察 $g(x)h\big(x^{-1}\big)$ 的
+                            $k = m - r$ 次项系数：</p>
+                        <p>$$
+                            \begin{aligned}
+                            [x^k]g(x)h\big(x^{-1}\big) &amp; = \sum_{r = 0}^{m} \bigg[ m! a_m \frac{c^r}{r!} \bigg] x^{m-r} \\
+                            &amp; = \sum_{m = k}^{n} \bigg[ m! a_m \frac{c^{m-k}}{(m-k)!} \bigg] x^{k} \\
+                            &amp; = b_kx^k
+                            \end{aligned}
+                            $$</p>
+                        <p>综上，$f(x + c)$ 是
+                            $g(x)h\big(x^{-1}\big)$ 的第 $0$ 到 $n$ 次项。</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="inner">
+                <section>
+                    <div class="contact-method">
+                        <span class="icon solid alt fa-envelope"></span>
+                        <h3>Email</h3>
+                        <span>348070954@qq.com</span>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <ul class="icons">
+                    <li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span
+                                class="label">GitHub</span></a></li>
+                </ul>
+                <ul class="copyright">
+                    <li>&copy; Untitled_unrevised</li>
+                    <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+                </ul>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
