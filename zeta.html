@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>浅谈正整数集的均匀分布</h1>
+									</header>
+									<p>回应这个标题的仅仅是一个看似非常简单实际有点难度的问题：如何定义「均匀随机地选取一个正整数」？</p>
+									<p>稍微思考一下这个问题，就会意识到这个问题远比第一眼看到后所以为的难得多。毕竟，正整数集 $\N_+$ 有无数个元素，直接用古典概型行不通。
+										正整数集也不像实数集 $\R$ 那样，可以直接动用实分析的力量来定义某个区间的均匀分布，因此几何概型也行不通。所以，我们应该怎么入手？
+									</p>
+									<h2>从概率空间讲起</h2>
+									<p>为了严格定义概率，首先介绍概率空间。</p>
+									<p>概率空间是一个三元组 $(\Omega, \mathscr{F}, P)$，其中</p>
+									<ul>
+										<li>$\Omega$：样本空间，表示一次随机试验所有可能的结果构成的集合；</li>
+										<li>$\mathscr{F} \subset 2^{\Omega}$：事件空间，表示想讨论的所有事件构成的集合；</li>
+										<li>$P \colon \mathscr{F} \to [0, 1]$：概率函数，描述一个事件发生的概率。</li>
+									</ul>
+									<p>同时还要满足以下性质：</p>
+									<ul>
+										<li>$\varnothing \in \mathscr{F}$，$P(\varnothing) = 0$；</li>
+										<p>其中 $\varnothing$ 代表空事件，是一个不可能事件。</p>
+										<li>若事件 $E \in \mathscr{F}$，则 $ \bar{E} \in \mathscr{F}$，$P(\bar{E}) = 1 - P(E)$；</li>
+										<p>这一条定义了「对立事件」及其性质。</p>
+										<li>若事件 $E_0, E_1, \dots$ 两两互斥，则 $\bigcup E_k \in \mathscr{F}$，
+											$P(\bigcup E_k) = \sum P(E_k)$。</li>
+										<p>这一条定义了「事件的和」及其性质。</p>
+									</ul>
+									<p>对于本文章要讨论的问题，样本空间 $\Omega = \N_+$，主要讨论的问题变成了：
+										希望考虑哪些事件（不希望讨论一些性质不好的事件）构成的 $\mathscr{F}$，怎么定义概率函数 $P$。</p>
+									<h2>例子</h2>
+									<p>考虑一些直觉上应该有的事件的概率：</p>
+									<ol>
+										<li>任何一个有限集 $A \subset N_+$ 代表的事件，$P(A) = 0$，因为有限集在无限集面前实在是太渺小了；</li>
+										<li>任何一个事件 $\{n \mid n \equiv 0 \pmod{M}\}$（表示随机一个数，它是 $M$ 的倍数），其概率应为 $\frac{1}{M}$；</li>
+										<li>任何一个事件 $A$，令 $B = \{n \mid n = a + k, a \in A\}$，其中 $k \in \N$ 是常数，即 $B$ 是 $A$ 往右平移 $k$ 个位置，
+											应有 $P(B) = P(A)$，即平移不会改变事件发生的概率；
+										</li>
+										<li>任何一个事件 $A$，令 $B = kA$，其中 $k \in \N_+$ 是常数，即 $B$ 是 $A$ 按原点缩放 $k$ 倍，
+											应有 $P(B) = P(A)$，即缩放不会改变事件发生的概率；
+										</li>
+									</ol>
+									<p>从 3. 和 4. 应该能看出来，想定义正整数集的均匀分布，其概率函数应有很强的不变性。</p>
+									<h2>推广古典概型</h2>
+									<p>想要用古典概型推出自然数集的均匀分布也未尝不可，动用一下极限的概念其实就可以了。定义事件 $A$ 的<u>自然密度</u>为
+									\[
+									\delta(A) = \lim_{n \to \infty} \frac{\#(A \cap [1, n])}{n}.
+									\]
+									则 $\delta$ 可以作为事件 $A$ 的概率。
+									</p>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

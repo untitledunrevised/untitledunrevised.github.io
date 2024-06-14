@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>线性组合 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/uutheme.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>线性组合，线性表示，线性相关组与线性无关组</h1>
+									</header>
+									<h2></h2>
+									<div class="box easy">
+										<p><b>定义</b>（线性组合，线性表示）：对于向量 $\vec u$ 和一族向量 $(\vec v_i)_{i \in I}$，若 $\vec u = \sum_{i \in I} k_i \vec v_i$，则称：
+											<ul>
+												<li>$\vec u$ 是 $(\vec v_i)_{i \in I}$ 的<b>线性组合</b>；</li>
+												<li>$\vec u$ 可由 $(\vec v_i)_{i \in I}$ <b>线性表示</b>；</li>
+											</ul>
+										</p>
+									</div>
+									<div class="box easy">
+										<p><b>定义</b>（线性相关组，线性无关组）：对于 $\mathbb k$ 上的向量空间 $V$ 和它的一族向量 $(\vec z_i)_{i \in I}$，若
+											$$
+											\sum_{i \in I}k_i\vec z_i = \vec 0 \Longleftrightarrow \forall i(k_i = 0)
+											$$
+											则 $Z$ 是<b>线性无关组</b>。反之 $Z$ 是<b>线性相关组</b>。
+										</p>
+										<p>由于线性无关组不存在两个相同的元素，因此亦可用集合表示。特别地，规定 $\varnothing$ 是线性无关组。</p>
+									</div>
+									<div class="box easy">
+										<p><b>引理</b>：线性无关组的子集必为线性无关组，反之包含线性相关组的一族元素必为线性相关组。</p>
+										<p><b>证明</b>：若不然，记线性无关组 $Z$ 的子集 $W$ 是线性相关组，则有
+											$$
+											\begin{aligned}
+											\vec 0 &= \sum_{\vec i \in I_W} k_i \vec w_i \\
+											       &= \sum_{\vec i \in I_W} k_i \vec w_i + \sum_{\vec i \in I_{Z \setminus W}} 0 \vec z_i
+											\end{aligned}
+											$$
+											由于 $W$ 是线性相关组，因此可以存在 $k_i \neq 0$，从而 $Z$ 是线性相关组，矛盾。
+										</p>
+									</div>
+									<div class="box easy">
+										<p><b>定义</b>（极大线性无关组）：若 $Z$ 是线性无关组，且添加任何向量都使 $Z$ 是线性相关组，则 $Z$ 是<b>极大线性无关组</b>。
+									</div>
+									<div class="box hard">
+										<p><b>引理</b>：<i>若选择公理成立</i>，任何向量空间 $V$ 皆存在极大线性无关组。</p>
+										<p><b>证明</b>：记 $S$ 是 $V$ 全体线性无关组构成的集合，并令 $\sube$ 为其上的偏序。对于 $(S, \sube)$ 的任何链，所有链上线性无关组的并为该链的一个上界，因此所有链皆存在上界。由选择公理，Zorn 引理成立，因此 $S$ 存在极大线性无关组。</p>
+									</div>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

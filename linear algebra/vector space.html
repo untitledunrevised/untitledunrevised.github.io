@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>向量空间 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/uutheme.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>向量空间</h1>
+									</header>
+									<p><i>前言待补。</i></p>
+									<h2>定义</h2>
+									<div class="box hard">
+										<p>域 $\mathbb k$ 上的<b>向量空间</b> $V$ 是定义了<b>加法</b>和<b>数乘</b>的集合：
+											<ol>
+												<li>加法：$+ \colon V \times V \to V$；</li>
+												<li>数乘：$\cdot \colon \mathbb k \times V \to V$；</li>
+											</ol>
+											并且对于所有的 $\lambda, \mu \in \mathbb k$ 和 $\vec{u}, \vec{v}, \vec{w} \in V$：
+											<ol>
+												<li>$(\vec u + \vec v) + \vec w = \vec u + (\vec v + \vec w)$；</li>
+												<li>存在 $\vec 0 \in V$ 使得 $\vec 0 + \vec v = \vec v$；</li>
+												<li>存在 $-\vec v \in V$ 使得 $\vec v + (-\vec v) = \vec 0$；</li>
+												<li>$\vec u + \vec v = \vec v + \vec u$；</li>
+												<li>$(\lambda \mu)\vec v = \lambda (\mu \vec v)$；</li>
+												<li>对于 $1 \in \mathbb k$，$1 \vec v = \vec v$；</li>
+												<li>$\lambda(\vec u + \vec v) = \lambda\vec u + \lambda\vec v$；</li>
+												<li>$(\lambda + \mu)\vec v = \lambda\vec v + \mu\vec v$；</li>
+											</ol>
+											$V$ 中的元素称为<b>向量</b>。
+										</p>
+									</div>
+									<h2>例子</h2>
+									<ul>
+										<li>对任何 $\mathbb k$，单点集构成<b>零向量空间</b>。</li>
+										<li>对于 $\mathbb k^n = \overbrace{\mathbb k \times \dots \times \mathbb k}^{n \text{ times}}$，定义其向量加法和标量乘法为
+											$$
+											\begin{aligned}
+											(u_1, u_2, \dots, u_n) + (v_1, v_2, \dots, v_n) &= (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n) \\
+											\lambda(v_1, v_2, \dots, v_n) &= (\lambda v_1, \lambda v_2, \dots, \lambda v_n)
+											\end{aligned}
+											$$
+											则 $\mathbb k^n$ 是向量空间。当 $\mathbb k = \mathbb R$ 时，该空间也称为 $n$ 维欧氏空间。
+										</li>
+									</ul>
+									<!--h2>线性映射</h2>
+									<p>对于域 $\mathbb k$ 上的向量空间 $V, W$，映射 $f\colon V \to W$ 是<b>线性映射</b>当且仅当其满足
+									$$
+									\forall \vec u, \vec v \in V(f(\vec u + \vec v) = f(\vec u) + f(\vec v)) \\
+									\forall \lambda \in \mathbb k \forall \vec v \in V(f(\lambda \vec v) = \lambda f(\vec v))
+									$$
+									</p-->
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
