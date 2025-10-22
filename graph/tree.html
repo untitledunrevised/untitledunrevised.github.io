@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>树 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script-->	
+		<link rel="stylesheet" href="../katex/katex.min.css">
+		<script defer src="../katex/katex.min.js"></script>
+		<script defer src="../katex/contrib/auto-render.min.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>树</h1>
+									</header>
+									<span class="image main"><img src="../images/pic11.jpg" alt="" /></span>
+									<h2>定义</h2>
+									<dl class="box">
+										<dt>无根树</dt>
+										<dd>
+											<p>以下定义完全等价。</p>
+											<div>
+												<input type="radio" id="def-tree-nocycle" name="def-tree" onclick="refreshTheorems()">
+												<label for="def-tree-nocycle">没有环的无向连通图。</label>
+											</div>
+											<div>
+												<input type="radio" id="def-tree-exactedges" name="def-tree" onclick="refreshTheorems()" checked>
+												<label for="def-tree-exactedges">恰好有 $|V| - 1$ 条边的无向连通图。</label>
+											</div>
+											<div>
+												<input type="radio" id="def-tree-unipath" name="def-tree" onclick="refreshTheorems()">
+												<label for="def-tree-unipath">任意两个不同点之间恰有一条路径的无向图。</label>
+											</div>
+											<div>
+												<input type="radio" id="def-tree-allbridges" name="def-tree" onclick="refreshTheorems()">
+												<label for="def-tree-allbridges">所有边皆为桥的无向连通图，即断开任何一条边都使图不再连通的无向连通图。</label>
+											</div>
+											<div>
+												<input type="radio" id="def-tree-any" name="def-tree" onclick="refreshTheorems()">
+												<label for="def-tree-any">满足以上任意一条性质的图。（<i>显示所有证明</i>）</label>
+											</div>
+										</dd>
+									</dl>
+									<h2>性质</h2>
+									<dl class="box">
+										<dt>引理</dt>
+										<dd>
+											<p>给定图 $G = (V, E)$ 和无向边 $(u, v) \notin E$（其中 $u, v \in V$），则对于新图 $G' = (V, E \cup \{(u, v)\})$：</p>
+											<ul>
+												<li>若 $u, v$ 在 $G$ 不连通，则 $G'$ 的连通块数量为 $G$ 的连通块数量减一；</li>
+												<li>若 $u, v$ 在 $G$ 连通，则 $G'$ 的连通块数量与 $G$ 的连通块数量相同。</li>
+											</ul>
+										</dd>
+										<dt>证明</dt>
+										<dd>
+											<p></p>
+										</dd>
+									</dl>
+									<dl class="box" id="theo-unipath-implies-nocycle" name="prop-tree">
+										<dt>定理<span style="font-weight: 300;">（无环）</span></dt>
+										<dd>
+											<p>树 $T = (V, E)$ 上不存在路径 $v_0 \to v_1 \to \dots \to v_{k-1} \to v_0$ 使得 $\forall i,j \in [0, k-1] \land i \neq j, v_i \neq v_j$；即树不存在环。</p>
+										</dd>
+										<dt>证明</dt>
+										<dd>
+											<p>若不然，即存在由 $k$ 个点 $\{v_0, v_1, \dots, v_{k-1}\}$ 构成的环，那么存在两条从 $v_0$ 到 $v_{k-1}$ 的路径：</p>
+											<ol>
+												<li>$v_0 \to v_{k-1}$</li>
+												<li>$v_0 \to v_1 \to \dots \to v_{k-1}$</li>
+											</ol>
+											<p>与「任意两个不同点之间恰有一条路径」矛盾。从而树不存在环。</p>
+										</dd>
+									</dl>
+									<dl class="box" id="theo-nocycle-implies-unipath" name="prop-tree">
+										<dt>定理<span style="font-weight: 300;">（两点间路径唯一）</span></dt>
+										<dd>
+											<p>给定树 $T = (V, E)$ 上的任意两个不同点 $u, v \in V$，存在唯一一条从 $u$ 到 $v$ 的路径。</p>
+										</dd>
+										<dt>证明</dt>
+										<dd>
+											<p>若不然，则存在 $u, v$，要么 $u, v$ 之间不存在路径，但与「树是连通图」矛盾；要么存在至少两条不同的路径：</p>
+											<ol>
+												<li>$u = a_0 \to \dots \to a_{A-1} = v$</li>
+												<li>$u = b_0 \to \dots \to b_{B-1} = v$</li>
+											</ol>
+											<p>令 $\operatorname{lstrip} = \max_{L \in \N}[\forall i \in [0, L](a_i = b_i)]$，令 $\operatorname{rstrip} = \max_{R \in \N}[\forall i \in [0, R](a_{A - 1 - i} = b_{B - 1 - i})]$。则以下两条路径</p>
+											<ol>
+												<li>$a_{\operatorname{lstrip}} \to \dots \to a_{A-1-\operatorname{rstrip}}$</li>
+												<li>$b_{\operatorname{lstrip}} \to \dots \to b_{B-1-\operatorname{rstrip}}$</li>
+											</ol>
+											<p>拼成一个环，与「树不存在环」矛盾。综上，任意两个不同点之间恰有一条路径。</p>
+										</dd>
+									</dl>
+									<dl class="box" id="theo--implies-exactedges" name="prop-tree">
+										<dt>定理<span style="font-weight: 300;">（边数为点数减一）</span></dt>
+										<dd>
+											<p>树 $T = (V, E)$ 满足 $|E| = |V| - 1$.</p>
+										</dd>
+										<dt>证明</dt>
+										<dd>
+											<p></p>
+										</dd>
+									</dl>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+			<script>
+				function refreshTheorems() {
+					if(document.getElementById("def-tree-any").checked) {
+						let nodelist = document.getElementsByName("prop-tree");
+						for(let idx = 0; idx < nodelist.length; ++idx) {
+							nodelist[idx].style.display = "inherit";
+						}
+						return;
+					}
+					else {
+						let nodelist = document.getElementsByName("prop-tree");
+						for(let idx = 0; idx < nodelist.length; ++idx) {
+							nodelist[idx].style.display = "none";
+						}
+					}
+					if(document.getElementById("def-tree-exactedges").checked) {
+						// document.getElementById("theo-exactedges-implies-nocycle").style.display = "inherit";
+					}
+					if(document.getElementById("def-tree-nocycle").checked) {
+						document.getElementById("theo-nocycle-implies-unipath").style.display = "inherit";
+					}
+					if(document.getElementById("def-tree-unipath").checked) {
+						document.getElementById("theo-unipath-implies-nocycle").style.display = "inherit";
+					}
+				}
+				refreshTheorems();
+			</script>
+
+	</body>
+</html>

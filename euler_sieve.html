@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Generic - untitledunrevised</title>
+		<title>Euler 筛法 - untitledunrevised</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -27,7 +27,10 @@
 						{left: '\\[', right: '\\]', display: true}
 					],
 					// rendering keys, e.g.:
-					throwOnError: false
+					throwOnError: false,
+					macros: {
+						"\\lpf": "\\operatorname{lpf}"
+					}
 				});
 			});
 		</script>
@@ -56,49 +59,98 @@
 					<div id="main" class="alt">
 
 						<!-- One -->
-							<section id="one">
+							<article id="one">
 								<div class="inner">
 									<header class="major">
-										<h1>Generic</h1>
+										<h1>Euler 筛法</h1>
 									</header>
-									<!--span class="image main"><img src="images/pic11.jpg" alt="" /></span-->
-									<p>
-										$$
-										\begin{CD}
-										U           @>u>>  X      @>x>> Y     @>y>> Z     @>z>> V          \\
-										@.                 @VfVV        @VgVV       @VhVV       @V\beta VV \\
-										U'          @>u'>> X'    @>x'>> Y'   @>y'>> Z'   @>z'>> V'
-										\end{CD}
-										$$
-									</p>
-									<p>
-										$$
-										U \xtwoheadrightarrow{\alpha} U' \xrightarrow{u'} X' \\
-										U \xrightarrow{u} X \xtwoheadrightarrow{\tilde x} \operatorname{im} x \xhookrightarrow{m} Y
-										$$
-									</p>
-									<!--p>
-										$$
-										\begin{CD}
-										\mathbb{Q}              @= S_3 \\
-										@|                       @V\vartriangleleft VV \\
-										\mathbb{Q}(\sqrt\Delta) @= C_3 \\
-										@VVV                       @V\vartriangleleft VV \\
-										\mathbb{Q}(\sqrt\Delta, \sqrt[3]{\sqrt\Delta + ?}) @= \{*\} \\        
-										\end{CD}
-										$$
-									</p-->
-									<p>
-										$$
-										\begin{CD}
-										\mathbb{Q} @>>>                 \mathbb{Q}(\sqrt\Delta) @>>> \mathbb{Q}(\sqrt\Delta, \sqrt[3]{\sqrt\Delta + ?}) \\
-										@|                              @|                           @| \\
-										S_3        @>\vartriangleleft>> C_3     @>\vartriangleleft>> I \\        
-										\end{CD}
-										$$
-									</p>
+									<p>Euler 筛法，又称线性筛法，是一种可以在线性时间筛选出所有素数，并求出诸多数论函数的算法。</p>
+									<p>本文将介绍 Euler 筛法的基础用途，包括筛选 $[1, N]$ 之间的所有素数，和求出数论函数在 $[1, N]$ 上的值。</p>
+									<h2>记号约定</h2>
+									<ul>
+										<li>$a \mid b$：$a$ 整除 $b$，即 $\exists q \in \Z$ 使得 $aq = b$。</li>
+									</ul>
+									<h2>算法描述</h2>
+									<p>Euler 筛法流程简述为：从小到大枚举自然数 $n \in [2, N]$，然后从小到大枚举素数 $p$，若 $np \le N$ 则计算数论函数 $f(np)$ 的值然后筛掉 $np$，直至 $p \mid n$ 或 $np \gt N$。</p>
+									<pre>
+<code>#include &lt;vector&gt;
+
+using std::vector;
+using u64 = unsigned long long;
+
+// config this
+constexpr u64 N = 1'000'000;
+
+bool vis[N + 1] = {};
+vector&lt;u64&gt; primes;
+
+void euler_sieve() {
+
+    for(u64 n = 2; n <= N; ++n) {
+
+        if(!vis[n]) {
+            primes.push_back(n);
+        }
+        
+        for(u64 p : primes) {
+            if(n * p > N)
+                break;
+            vis[n * p] = 1;
+            if(n % p == 0)
+                break;
+        }
+    }
+}</code></pre>
+									<p>接下来详细介绍这里面的各个细节。</p>
+									<h3>记录最小素因子</h3>
+									<p>为了方便讲解，我们首先定义「最小素因子」。</p>
+									<dl class="box">
+										<dt>最小素因子</dt>
+										<dd>对于 $n \ge 2$，其最小素因子 $\lpf(n) = \min\{p \in \mathbb P\colon p \mid n\}$。特别地，定义 $\lpf(1) = 1$。</dd>
+									</dl>
+									<p>下面的表格展示 $\lpf$ 的部分取值：</p>
+									<table class="alt">
+										<tbody>
+											<tr>
+												<td>$n$</td>
+												<td>$1$</td>
+												<td>$2$</td>
+												<td>$3$</td>
+												<td>$4$</td>
+												<td>$5$</td>
+												<td>$6$</td>
+												<td>$7$</td>
+												<td>$8$</td>
+												<td>$9$</td>
+												<td>$10$</td>
+												<td>$11$</td>
+												<td>$12$</td>
+												<td>$13$</td>
+												<td>$14$</td>
+												<td>$15$</td>
+											</tr>
+											<tr>
+												<td>$\lpf(n)$</td>
+												<td>$1$</td>
+												<td>$2$</td>
+												<td>$3$</td>
+												<td>$2$</td>
+												<td>$5$</td>
+												<td>$2$</td>
+												<td>$7$</td>
+												<td>$2$</td>
+												<td>$3$</td>
+												<td>$2$</td>
+												<td>$11$</td>
+												<td>$2$</td>
+												<td>$13$</td>
+												<td>$2$</td>
+												<td>$3$</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
-							</section>
+							</article>
 
 					</div>
 
@@ -109,7 +161,7 @@
 								<div class="contact-method">
 									<span class="icon solid alt fa-envelope"></span>
 									<h3>Email</h3>
-									<span>348070954@qq.com</span>
+									<span>untitledunrevised@qq.com</span>
 								</div>
 							</section>
 						</div>

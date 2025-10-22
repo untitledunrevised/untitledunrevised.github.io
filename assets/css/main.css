@@ -271,6 +271,7 @@ input, select, textarea {
 			line-height: 1.75;
 			padding: 1em 1.5em;
 			overflow-x: auto;
+			font-feature-settings: "liga" 1, "calt" 1;
 		}
 
 	hr {

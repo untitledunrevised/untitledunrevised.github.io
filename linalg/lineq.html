@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>线性方程组 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/uutheme.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>线性方程</h1>
+									</header>
+									<!--span class="image main"><img src="../images/pic11.jpg" alt="" /></span-->
+									<p>前言待补。</p>
+
+									<section id="def">
+										<h2>定义</h2>
+
+										<p class="box easy">
+											<b>定义</b>（线性方程）<strong>线性方程</strong>是如下形式的方程：
+											$$
+											\vec v = A \vec u
+											$$
+											其中 $\vec u, \vec v$ 是向量，$A$ 是线性映射。
+										</p>
+
+										<p>若 $\vec u = (u_1, u_2, \dots, u_m)$，$\vec v = (v_1, v_2, \dots, v_n)$，则可以得到线性方程组的定义：</p>
+										
+										<p class="box easy">
+											<b>定义</b>（线性方程组）<strong>线性方程组</strong>是如下矩阵表达式：
+											$$
+											\begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix}
+											= \begin{bmatrix}
+											a_{1,1} & a_{1,2} & \cdots & a_{1,m} \\
+											a_{2,1} & a_{2,2} & \cdots & a_{2,m} \\
+											\vdots  & \vdots  & \ddots & \vdots  \\
+											a_{n,1} & a_{n,2} & \cdots & a_{n,m}
+											\end{bmatrix}
+											\begin{bmatrix} u_1 \\ u_2 \\ \vdots \\ u_m \end{bmatrix}
+											$$
+										</p>
+
+										<p class="box easy">
+											<b>定义</b>（线性方程组）<strong>线性方程组</strong>是如下形式的一列方程：
+											$$
+											\begin{equation*}
+											\begin{aligned}
+											v_1 &= a_{1,1}u_1 + a_{1,2}u_2 + \dots + a_{1,m}u_m \\
+											v_2 &= a_{2,1}u_1 + a_{2,2}u_2 + \dots + a_{2,m}u_m \\
+											&\dots \\
+											v_n &= a_{n,1}u_1 + a_{n,2}u_2 + \dots + a_{n,m}u_m \\
+											\end{aligned}
+											\end{equation*}
+											$$
+										</p>
+									</section>
+									
+									<section id="elementary-transform">
+										<h2>初等变换</h2>
+										<p>对线性方程组的所有变换皆可归结为如下初等变换的复合：</p>
+
+										<div class="box easy">
+											<p><b>定义</b>（初等变换）<strong>初等变换</strong>是如下变换的统称：
+												<ol>
+													<li><b>倍乘</b>（$\lambda \times r_s$）：将第 $s$ 行乘上 $\lambda$ 倍；
+													$$
+													\begin{aligned}
+													\begin{bmatrix} v_s \end{bmatrix}
+													&= \begin{bmatrix}
+													a_{s,1} & a_{s,2} & \cdots & a_{s,m}
+													\end{bmatrix} \vec u \\
+	
+													\xrightarrow{\lambda \times r_s}
+	
+													\begin{bmatrix} \lambda v_s \end{bmatrix}
+													&= \begin{bmatrix}
+													\lambda a_{s,1} & \lambda a_{s,2} & \cdots & \lambda a_{s,m}
+													\end{bmatrix} \vec u
+													\end{aligned}
+													$$</li>
+
+													<li><b>倍加</b>（$r_t + \lambda \times r_s$）：将第 $t$ 行加上第 $s$ 行的 $\lambda$ 倍，其中 $s \neq t$；
+													$$
+													\begin{aligned}
+													\begin{bmatrix} v_s \\ v_t \end{bmatrix}
+													&= \begin{bmatrix}
+													a_{s,1} & a_{s,2} & \cdots & a_{s,m} \\
+													a_{t,1} & a_{t,2} & \cdots & a_{t,m}
+													\end{bmatrix} \vec u \\
+	
+													\xrightarrow{r_t + \lambda \times r_s}
+	
+													\begin{bmatrix} v_s \\ v_t + \lambda v_s \end{bmatrix}
+													&= \begin{bmatrix}
+													a_{s,1} & a_{s,2} & \cdots & a_{s,m} \\
+													a_{t,1} + \lambda a_{s,1} & a_{t,2} + \lambda a_{s,2} & \cdots & a_{t,m} + \lambda a_{s,m}
+													\end{bmatrix} \vec u
+													\end{aligned}
+													$$</li>
+
+													<li><b>对换</b>（$r_s \leftrightarrow r_t$）：将第 $s$ 行和第 $t$ 行交换，其中 $s \neq t$。
+													$$
+													\begin{aligned}
+													\begin{bmatrix} v_s \\ v_t \end{bmatrix}
+													&= \begin{bmatrix}
+													a_{s,1} & a_{s,2} & \cdots & a_{s,m} \\
+													a_{t,1} & a_{t,2} & \cdots & a_{t,m}
+													\end{bmatrix} \vec u \\
+	
+													\xrightarrow{r_s \leftrightarrow r_t}
+	
+													\begin{bmatrix} v_t \\ v_s \end{bmatrix}
+													&= \begin{bmatrix}
+													a_{t,1} & a_{t,2} & \cdots & a_{t,m} \\
+													a_{s,1} & a_{s,2} & \cdots & a_{s,m}
+													\end{bmatrix} \vec u \\
+													\end{aligned}
+													$$</li>
+												</ol>
+											</p>
+										</div>
+									</section>
+									
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

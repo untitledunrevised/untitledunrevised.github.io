@@ -63,7 +63,13 @@
 										<h1>线性生成空间与基</h1>
 									</header>
 									<p><i>前言待补。</i></p>
-									<h2>定义</h2>
+									<div class="box hard">
+										<p><b>定义</b>（线性生成空间）：对于域 $\mathbb k$，一族向量 $Z = (\vec z_i)_{i \in I}$ 的<b>线性生成空间</b>是
+											$$
+											\operatorname{span}(Z) = \Set{\sum_{i \in I} k_i \vec z_i | k_i \in \mathbb k}.
+											$$
+										</p>
+									</div>
 									<div class="box hard">
 										<p><b>定义</b>（基）：对于向量空间 $V$ 和它的子集 $Z$，若满足：
 										<ol>
@@ -72,11 +78,13 @@
 										</ol>
 										则 $Z$ 是 $V$ 的<b>基</b>。</p>
 									</div>
-									<h2>基存在定理</h2>
 									<div class="box hard">
 										<p><b>定理</b>（基存在定理）：<i>若选择公理成立</i>，任何向量空间 $V$ 皆存在基。</p>
-										<p><b>证明</b>：由于选择公理成立，$V$ 存在极大线性无关组。对任一极大线性无关组 $Z$，若 $\operatorname{span}(Z) \subsetneq V$，则存在 $\vec v \in \operatorname{span}(Z) \setminus V$，则 $Z \cup \{\vec v\}$ 也是线性无关组，与 $Z$ 极大矛盾。</p>
+										<p><b>证明</b>：由于选择公理成立，$V$ 存在极大线性无关组。对任一极大线性无关组 $Z$，若 $\operatorname{span}(Z) \subsetneq V$，则存在 $\vec v \in V \setminus \operatorname{span}(Z)$，则 $Z \cup \{\vec v\}$ 也是线性无关组，与 $Z$ 极大矛盾。</p>
 										<p>因此 $\operatorname{span}(Z) = V$，即任一极大线性无关组皆是 $V$ 的基。</p>
+									</div>
+									<div class="box hard">
+										<p><b>引理</b>（Steinitz-Mac Lane 替换引理）：对于向量空间 $V$ 的两个基 $Z, W$，若 $\vec z \in Z \setminus W$，则 $\exists \vec w \in W \setminus Z$，$(Z \setminus \{\vec z\}) \cup \{\vec w\}$ 也是 $V$ 的基。</p>
 									</div>
 								</div>
 							</section>

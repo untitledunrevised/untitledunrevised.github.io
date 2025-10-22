@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>连通性 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css">
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+
+		<!--link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script-->
+		<link rel="stylesheet" href="../katex/katex.min.css">
+		<script defer src="../katex/katex.min.js"></script>
+		<script defer src="../katex/contrib/auto-render.min.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>无向图的连通性相关</h1>
+									</header>
+									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+									<h2>连通</h2>
+									<h3>定义</h3>
+									<p>存在两种等价的定义。</p>
+									<div>
+										<input type="radio" id="def-uconnected-path" name="def-uconnected" checked>
+										<label for="def-uconnected-path">通过路径存在定义</label>
+									</div>
+									<div>
+										<input type="radio" id="def-uconnected-equiv" name="def-uconnected">
+										<label for="def-uconnected-equiv">通过等价关系定义</label>
+									</div>
+									<dl class="box">
+										<dt>定义<span style="font-weight: 300;">（无向图上的连通）</span></dt>
+										<dd>
+											<p>对于无向图 $G = (V, E)$ 上的两点 $u, v$，称 $u$ 与 $v$ <b>连通</b>当且仅当存在从 $u$ 到 $v$ 的路径。</p>
+										</dd>
+									</dl>
+									<dl class="box">
+										<dt>定义<span style="font-weight: 300;">（无向图上的连通）</span></dt>
+										<dd>
+											<p>对于无向图 $G = (V, E)$，<b>连通</b>是满足如下性质的二元关系：</p>
+											<ol>
+												<!--li>边相连的两点连通：$E \sube R$；</li-->
+												<li>边相连的两点连通：若 $(u, v) \in E$ 则 $u$ 与 $v$ 连通；</li>
+												<!--li>自反性：$\forall u \in V, (u, u) \in R$；</li-->
+												<li>自反性：$\forall u \in V, (u, u) \in R$；</li>
+												<!--li>对称性：$(u, v) \in R \implies (v, u) \in R$；</li-->
+												<li>对称性：$(u, v) \in R \implies (v, u) \in R$；</li>
+												<!--li>传递性：$(u, v) \in R \land (v, w) \in R \implies (u, w) \in R$；</li-->
+												<li>传递性：$(u, v) \in R \land (v, w) \in R \implies (u, w) \in R$；</li>
+												<!--li>不存在 $R' \subsetneq R$ 满足前四条，即 $R$ 是最小的。</li-->
+											</ol>
+											<p>此时称 $u$ 与 $v$ 连通当且仅当 $(u, v) \in R$。</p>
+										</dd>
+									</dl>
+									<h3>性质</h3>
+									<dl class="box">
+										<dt>引理</dt>
+										<dd>
+											<p>连通是等价关系，即它满足：
+												<ol>
+													<li>自反性：$u$ 与 $u$ 连通；</li>
+													<li>对称性：若 $u$ 与 $v$ 连通，则 $v$ 与 $u$ 连通；</li>
+													<li>传递性：若 $u$ 与 $v$ 连通且 $v$ 与 $w$ 连通，则 $u$ 与 $w$ 连通。</li>
+												</ol>
+											</p>
+										</dd>
+										<dt>证明</dt>
+										<dd>
+											<ol>
+												<li>存在路径 $u$，从而显然。</li>
+												<li>由于是无向图，存在路径 $u \to a_1 \to \dots \to a_n \to v$ 意味着存在路径 $v \to a_n \to \dots \to a_1 \to u$，从而 $v$ 与 $u$ 连通。</li>
+												<li>存在路径 $u \to a_1 \to \dots \to a_n \to v$ 和路径 $v \to b_1 \to \dots \to b_m \to w$ 意味着存在路径 $u \to a_1 \to \dots \to a_n \to v \to b_1 \to \dots \to b_m \to w$，从而 $u$ 与 $w$ 连通。</li>
+											</ol>
+										</dd>
+									</dl>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>348070954@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -81,7 +81,20 @@
 										<p>由于线性无关组不存在两个相同的元素，因此亦可用集合表示。特别地，规定 $\varnothing$ 是线性无关组。</p>
 									</div>
 									<div class="box easy">
-										<p><b>引理</b>：线性无关组的子集必为线性无关组，反之包含线性相关组的一族元素必为线性相关组。</p>
+										<p><b>性质</b>：线性无关组 $Z$ 的任何元素 $z_j$ 不可被 $Z \setminus \{z_j\}$ 线性表示。</p>
+										<p><b>证明</b>：若不然，则
+										$$
+										\vec z_j = \sum_{i \in I \setminus \{j\}} k_i\vec z_i
+										$$
+										移项得
+										$$
+										\vec 0 = \sum_{i \in I \setminus \{j\}} k_i\vec z_i - 1 \vec z_j \\
+										$$
+										由于 $k_j = -1 \neq 0$，从而 $Z$ 线性相关，矛盾。该性质亦可作为线性无关组的等价定义。
+										</p>
+									</div>
+									<div class="box easy">
+										<p><b>性质</b>：线性无关组的子集必为线性无关组，反之包含线性相关组的一族元素必为线性相关组。</p>
 										<p><b>证明</b>：若不然，记线性无关组 $Z$ 的子集 $W$ 是线性相关组，则有
 											$$
 											\begin{aligned}
@@ -90,6 +103,19 @@
 											\end{aligned}
 											$$
 											由于 $W$ 是线性相关组，因此可以存在 $k_i \neq 0$，从而 $Z$ 是线性相关组，矛盾。
+										</p>
+									</div>
+									<div class="box easy">
+										<p><b>定理</b>（唯一表示）：若线性无关组 $Z$ 可线性表示 $\vec u$，则具有唯一的表示。</p>
+										<p><b>证明</b>：若不然，则 $\exists i \in I(k_i \neq k_i')$ 且
+										$$
+										\vec u = \sum_{i \in I} k_i\vec z_i = \sum_{i \in I} k_i'\vec z_i
+										$$
+										两式相减得
+										$$
+										\vec 0 = \sum_{i \in I} (k_i - k_i')\vec z_i \\
+										$$
+										由于 $\exists i \in I(k_i - k_i' \neq 0)$，从而 $Z$ 线性相关，矛盾。
 										</p>
 									</div>
 									<div class="box easy">
