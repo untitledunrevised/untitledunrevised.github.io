@@ -29,7 +29,8 @@
 					// rendering keys, e.g.:
 					throwOnError: false,
 					macros: {
-						"\\lpf": "\\operatorname{lpf}"
+						"\\lpf": "\\operatorname{lpf}",
+						"\\pa": "\\operatorname{pa}"
 					}
 				});
 			});
@@ -65,13 +66,16 @@
 										<h1>Euler 筛法</h1>
 									</header>
 									<p>Euler 筛法，又称线性筛法，是一种可以在线性时间筛选出所有素数，并求出诸多数论函数的算法。</p>
-									<p>本文将介绍 Euler 筛法的基础用途，包括筛选 $[1, N]$ 之间的所有素数，和求出数论函数在 $[1, N]$ 上的值。</p>
+									<p>本文将介绍 Euler 筛法的基础用途，包括筛选 $[1, N]$ 之间的所有素数，枚举 $n$ 的所有素因子，和求出数论函数在 $[1, N]$ 上的值。</p>
 									<h2>记号约定</h2>
 									<ul>
 										<li>$a \mid b$：$a$ 整除 $b$，即 $\exists q \in \Z$ 使得 $aq = b$。</li>
+										<li>$\omega(n)$：$n$ 的不同素因子个数。</li>
+										<li>$\Omega(n)$：$n$ 的计重素因子个数。</li>
+										<li>$\gcd(a, b)$：$a$ 与 $b$ 的最大公约数，</li>
 									</ul>
-									<h2>算法描述</h2>
-									<p>Euler 筛法流程简述为：从小到大枚举自然数 $n \in [2, N]$，然后从小到大枚举素数 $p$，若 $np \le N$ 则计算数论函数 $f(np)$ 的值然后筛掉 $np$，直至 $p \mid n$ 或 $np \gt N$。</p>
+									<h2>筛选素数</h2>
+									<p>Euler 筛法流程简述为：从小到大枚举自然数 $n \in [2, N]$，如果其未被筛掉则是素数并加入；然后从小到大枚举素数 $p$，若 $np \le N$ 则筛掉 $np$，直至 $p \mid n$ 或 $np \gt N$。</p>
 									<pre>
 <code>#include &lt;vector&gt;
 
@@ -86,69 +90,163 @@ vector&lt;u64&gt; primes;
 
 void euler_sieve() {
 
-    for(u64 n = 2; n <= N; ++n) {
+	for(u64 n = 2; n <= N; ++n) {
 
-        if(!vis[n]) {
-            primes.push_back(n);
-        }
-        
-        for(u64 p : primes) {
-            if(n * p > N)
-                break;
-            vis[n * p] = 1;
-            if(n % p == 0)
-                break;
-        }
-    }
+		if(!vis[n])
+			primes.push_back(n);
+		
+		for(u64 p : primes) {
+			if(n * p > N)
+				break;
+			vis[n * p] = 1;
+			if(n % p == 0)
+				break;
+		}
+	}
 }</code></pre>
-									<p>接下来详细介绍这里面的各个细节。</p>
-									<h3>记录最小素因子</h3>
-									<p>为了方便讲解，我们首先定义「最小素因子」。</p>
-									<dl class="box">
-										<dt>最小素因子</dt>
-										<dd>对于 $n \ge 2$，其最小素因子 $\lpf(n) = \min\{p \in \mathbb P\colon p \mid n\}$。特别地，定义 $\lpf(1) = 1$。</dd>
-									</dl>
-									<p>下面的表格展示 $\lpf$ 的部分取值：</p>
-									<table class="alt">
-										<tbody>
-											<tr>
-												<td>$n$</td>
-												<td>$1$</td>
-												<td>$2$</td>
-												<td>$3$</td>
-												<td>$4$</td>
-												<td>$5$</td>
-												<td>$6$</td>
-												<td>$7$</td>
-												<td>$8$</td>
-												<td>$9$</td>
-												<td>$10$</td>
-												<td>$11$</td>
-												<td>$12$</td>
-												<td>$13$</td>
-												<td>$14$</td>
-												<td>$15$</td>
-											</tr>
-											<tr>
-												<td>$\lpf(n)$</td>
-												<td>$1$</td>
-												<td>$2$</td>
-												<td>$3$</td>
-												<td>$2$</td>
-												<td>$5$</td>
-												<td>$2$</td>
-												<td>$7$</td>
-												<td>$2$</td>
-												<td>$3$</td>
-												<td>$2$</td>
-												<td>$11$</td>
-												<td>$2$</td>
-												<td>$13$</td>
-												<td>$2$</td>
-												<td>$3$</td>
-											</tr>
-										</tbody>
-									</table>
+									<p>接下来详细介绍这里面的一些细节。</p>
+									<ul>
+										<li><code>vis</code> 数组：记录一个数是否被筛掉；</li>
+										<li><code>primes</code> 容器：记录 $\le n$ 的所有素数；</li>
+									</ul>
+									<p>与 Eratosthenes 筛法不同的是，Eratosthenes 筛法是先从小到大枚举素数 $p$，然后再枚举 $n \ge p$ 并筛掉 $np$。这就是 Eratosthenes 筛法时间复杂度为 $O(N \log \log N)$ 的原因：每个数 $n$ 被精确筛了 $\omega(n)$ 次，它的总和恰好是 $O(N \log \log N)$ 级别的。<i>如需证明，请参阅 Mertens 第二定理。</i></p>
+									<p>$$
+									\begin{aligned}
+									\sum_{n = 1}^{N} \omega(n) &= \sum_{p \le N, p \in \mathbb P} \bigg\lfloor\frac{N}{p}\bigg\rfloor \\
+									&= N \log\log N + O(1)
+									\end{aligned}
+									$$</p>
+									<p>那么为了消除掉这样的 $\log$ 套 $\log$，Euler 筛法指出，一个数只需要<b>被最小的素因子筛掉</b>就可以了。理解了这一思想，降低时间复杂度的最关键的语句就在 <code>if(n % p == 0) break;</code> 上。考虑到 $p$ 是从小到大枚举的，如果筛掉了 $np$ 之后恰好有 $p \mid n$，那么对于之后所有的 $p' \gt p$，$np'$ 的最小素因子是 $p$ 而非 $p'$，从而没有再筛一次的必要。</p>
+									<h2>枚举所有素因子</h2>
+									<p>为了方便讲解，下面我们记 $n \ge 2$ 的最小素因子为 $\lpf(n)$。根据前文，Euler 筛法实际上直接求出了 $\lpf$ 在 $[2, N]$ 上的全部取值。代码如下：</p>
+									<pre>
+<code>#include &lt;vector&gt;
+
+using std::vector;
+using u64 = unsigned long long;
+
+// config this
+constexpr u64 N = 1'000'000;
+
+u64 lpf[N + 1] = {};
+vector&lt;u64&gt; primes;
+
+void euler_sieve() {
+
+	for(u64 n = 2; n <= N; ++n) {
+
+		if(lpf[n] == 0) {
+			primes.push_back(n);
+			lpf[n] = n;
+		}
+		
+		for(u64 p : primes) {
+			if(n * p > N)
+				break;
+			lpf[n * p] = p;
+			if(n % p == 0)
+				break;
+		}
+	}
+}</code></pre>
+									<p>那么如何枚举 $n$ 的所有素因子？很简单。如果 $n \neq 1$，输出 $\lpf(n)$ 后将 $n$ 除去 $\lpf(n)$；重复以上过程直至 $n = 1$ 结束。参考代码如下：</p>
+									<pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using std::cout;
+using std::vector;
+
+using u64 = unsigned long long;
+
+// config this
+constexpr u64 N = 1'000'000;
+
+u64 lpf[N + 1] = {};
+vector&lt;u64&gt; primes;
+
+void euler_sieve() {
+	// see above
+}
+
+bool initialized = false;
+
+void print_all_prime_factors(u64 n) {
+	if(!initialized) {
+		euler_sieve();
+		initialized = true;
+	}
+	cout &lt;&lt; n &lt;&lt; " = ";
+	for(; n != 1; n /= lpf[n]) {
+		cout &lt;&lt; lpf[n] &lt;&lt; " * ";
+	}
+	cout &lt;&lt; "1\n";
+}</code></pre>
+									<p>这份代码的时间复杂度是多少？答案是 $\Omega(n) = O(\log n)$，往里带入 $p^k$ 恰好能卡到这个上界。然而有些应用里不关心相同的素因子，因此希望有一种时间复杂度 $\omega(n) = O\bigg(\dfrac{\log n}{\log \log n}\bigg)$ 的算法来枚举 $n$ 的不同素因子。</p>
+									<p>好在 Euler 筛法也可以稍加改造来支持这一点。为了跳过重复的素因子，定义 <code>pa[n]</code> 为 $n$ 除去所有 $\lpf(n)$ 因子后留下来的部分。再次回顾 <code>if(n % p == 0)</code> 这一分支语句：</p>
+									<ul>
+										<li>若 $p \nmid n$，显然 $np$ 的素因子 $p$ 只有一个，从而 $\pa(np) = n$；</li>
+										<li>若 $p \mid n$，此时 $np$ 的素因子 $p$ 可能有多个，但同时也知道了 $n$ 也得剔除掉所有的素因子 $p$，从而 $\pa(np) = \pa(n)$。</li>
+									</ul>
+									<p>最后我们有 $\pa(p) = 1$，就改造完了：</p>
+									<pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using std::cout;
+using std::vector;
+
+using u64 = unsigned long long;
+
+// config this
+constexpr u64 N = 1'000'000;
+
+u64 lpf[N + 1] = {};
+u64 pa[N + 1] = {};
+vector&lt;u64&gt; primes;
+
+void euler_sieve() {
+
+	for(u64 n = 2; n <= N; ++n) {
+
+		if(lpf[n] == 0) {
+			primes.push_back(n);
+			lpf[n] = n;
+			pa[n] = 1;
+		}
+		
+		for(u64 p : primes) {
+
+			if(n * p > N)
+				break;
+			lpf[n * p] = p;
+
+			if(n % p == 0) {
+				pa[n * p] = pa[n];
+				break;
+			}
+			else {
+				pa[n * p] = n;
+			}
+		}
+	}
+}
+
+bool initialized = false;
+
+void print_different_prime_factors(u64 n) {
+	if(!initialized) {
+		euler_sieve();
+		initialized = true;
+	}
+	for(; n != 1; n = pa[n]) {
+		cout &lt;&lt; lpf[n] &lt;&lt; " ";
+	}
+	cout &lt;&lt; "\n";
+}</code></pre>
+									<h2>计算数论函数的值</h2>
+									<p>有一类数论函数 $f$ 满足这样的性质：若 $\gcd(n, m) = 1$，则 $f(nm) = f(n) \diamond f(m)$</p>
+
 								</div>
 							</article>
 

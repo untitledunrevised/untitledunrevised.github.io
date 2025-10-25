@@ -272,6 +272,7 @@ input, select, textarea {
 			padding: 1em 1.5em;
 			overflow-x: auto;
 			font-feature-settings: "liga" 1, "calt" 1;
+			tab-size: 4;
 		}
 
 	hr {
