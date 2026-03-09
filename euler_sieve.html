@@ -113,7 +113,8 @@ void euler_sieve() {
 									<p>$$
 									\begin{aligned}
 									\sum_{n = 1}^{N} \omega(n) &= \sum_{p \le N, p \in \mathbb P} \bigg\lfloor\frac{N}{p}\bigg\rfloor \\
-									&= N \log\log N + O(1)
+									&= \sum_{p \le N, p \in \mathbb P} \frac{N}{p} + O\bigg(\frac{N}{\log N}\bigg) \\
+									&= N \log\log N + O\bigg(\frac{N}{\log N}\bigg)
 									\end{aligned}
 									$$</p>
 									<p>那么为了消除掉这样的 $\log$ 套 $\log$，Euler 筛法指出，一个数只需要<b>被最小的素因子筛掉</b>就可以了。理解了这一思想，降低时间复杂度的最关键的语句就在 <code>if(n % p == 0) break;</code> 上。考虑到 $p$ 是从小到大枚举的，如果筛掉了 $np$ 之后恰好有 $p \mid n$，那么对于之后所有的 $p' \gt p$，$np'$ 的最小素因子是 $p$ 而非 $p'$，从而没有再筛一次的必要。</p>
@@ -203,6 +204,8 @@ constexpr u64 N = 1'000'000;
 
 u64 lpf[N + 1] = {};
 u64 pa[N + 1] = {};
+u64 expo[N + 1] = {};
+u64 d[N + 1] = {};
 vector&lt;u64&gt; primes;
 
 void euler_sieve() {
@@ -245,8 +248,94 @@ void print_different_prime_factors(u64 n) {
 	cout &lt;&lt; "\n";
 }</code></pre>
 									<h2>计算数论函数的值</h2>
-									<p>有一类数论函数 $f$ 满足这样的性质：若 $\gcd(n, m) = 1$，则 $f(nm) = f(n) \diamond f(m)$</p>
+									<p>有一类数论函数 $f$ 满足这样的性质：若 $\gcd(n, m) = 1$，则 $f(nm) = f(n) \diamond f(m)$；只要 $\diamond$ 满足结合律，那么 Euler 筛法也可以通过恰好 $n - 1$ 次调用 $\diamond$ 和 $\displaystyle O\bigg(\frac{n}{\ln n}\bigg)$ 次计算 $f(p^k)$（$k \ge 1$）后算出全体 $f(1), \dots, f(n)$ 的值。以下是一些满足这种性质的函数：</p>
+									<ul>
+										<li>$\diamond = \times$（积性函数），$f(1) = 1$：
+											<ul>
+												<li>$d(n)$：因数个数函数，$d(p^k) = k + 1$；</li>
+												<li>$\mu(n)$：Mobius 函数，$\mu(p^k) = -[k = 1]$；</li>
+												<li>$\varphi(n)$：Euler 函数，$\varphi(p^k) = p^{k - 1}(p - 1)$；</li>
+											</ul>
+										</li>
+										<li>$\diamond = +$（加性函数），$f(1) = 0$：
+											<ul>
+												<li>$\omega(n)$：不同素因子个数，$\omega(p^k) = 1$；</li>
+												<li>$\Omega(n)$：计重素因子个数，$\Omega(p^k) = k$；</li>
+												<li>$\nu_q(n)$：$n$ 中 $q$ 作为素因数时对应的幂次，$\nu_q(p^k) = k[p = q]$；</li>
+											</ul>
+										</li>
+										<li>$\diamond = \min$，$f(1) = +\infty$：
+											<ul>
+												<li>$\lpf$，最小素因子，$\lpf(p^k) = p$；</li>
+											</ul>
+										</li>
+									</ul>
+									<p>相对通用的做法，是再生成 <code>expo</code> 数组，用来记录 $\nu_{\lpf(n)}(n)$。再次回顾 <code>if(n % p == 0)</code> 这一分支语句：</p>
+									<ul>
+										<li>若 $p \nmid n$，显然 $np$ 的素因子 $p$ 只有一个，从而 <code>expo[n * p] = 1</code>；</li>
+										<li>若 $p \mid n$，此时 $np$ 的素因子 $p$ 可能有多个，但同时也知道了 $n$ 的最小素因子也 $p$，且 <code>expo[n]</code> 已经计算过，从而 <code>expo[n * p] = expo[n] + 1</code>。</li>
+									</ul>
+									<p>最后我们有 <code>expo[1] = 0</code>，就改造完了。下面以计算 $d(n)$ 为例：</p>
+									<pre>
+<code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
 
+using std::cout;
+using std::vector;
+
+using u64 = unsigned long long;
+
+// config this
+constexpr u64 N = 1'000'000;
+
+u64 lpf[N + 1] = {};
+u64 pa[N + 1] = {};
+vector&lt;u64&gt; primes;
+
+void euler_sieve() {
+
+	d[1] = 1;
+
+	for(u64 n = 2; n <= N; ++n) {
+
+		if(lpf[n] == 0) {
+			primes.push_back(n);
+			lpf[n] = n;
+			pa[n] = 1;
+			d[n] = 2;
+		}
+		
+		for(u64 p : primes) {
+
+			if(n * p > N)
+				break;
+			lpf[n * p] = p;
+
+			if(n % p == 0) {
+				pa[n * p] = pa[n];
+				expo[n * p] = expo[n] + 1;
+				d[n * p] = d[pa[n]] * (expo[n * p] + 1);
+				break;
+			}
+			else {
+				pa[n * p] = n;
+				expo[n * p] = 1;
+				d[n * p] = d[n] * 2; // d[p] == 2
+			}
+		}
+	}
+}
+
+bool initialized = false;
+
+u64 num_of_divisors(u64 n) {
+	if(!initialized) {
+		euler_sieve();
+		initialized = true;
+	}
+	cout &lt;&lt; "d(" &lt;&lt; n &lt;&lt; ") = " d[n] &lt;&lt; "\n";
+	return d[n];
+}</code></pre>
 								</div>
 							</article>
 
