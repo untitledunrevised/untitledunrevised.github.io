@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fisher-Yates 算法 - untitledunrevised</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/uutheme.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+		<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function() {
+				renderMathInElement(document.body, {
+					// customised options
+					// auto-render specific keys, e.g.:
+					delimiters: [
+						{left: '$$', right: '$$', display: true},
+						{left: '$', right: '$', display: false},
+						{left: '\\(', right: '\\)', display: false},
+						{left: '\\[', right: '\\]', display: true}
+					],
+					// rendering keys, e.g.:
+					throwOnError: false
+				});
+			});
+		</script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>untitled</strong> <span>unrevised</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Fisher-Yates 算法</h1>
+									</header>
+									<p>本文介绍原地均匀随机生成排列的 Fisher-Yates 算法。</p>
+									<h2>基础定义</h2>
+									<p>首先定义一下阶乘。</p>
+									<dl class="box easy">
+										<dt>阶乘</dt>
+										<dd>
+											<p>给定非负整数 $n$，其阶乘通过如下方式递归定义：
+												$$
+												\begin{aligned}
+												n! &= n \times (n - 1) \times \dots \times 1\\
+												&= \begin{cases}
+												n \times (n - 1)! & n \ge 1 \\
+												1 & n = 0
+												\end{cases}
+												\end{aligned}
+												$$
+											</p>
+										</dd>
+									</dl>
+									<p>下面定义一下排列。</p>
+									<dl class="box easy">
+										<dt>排列</dt>
+										<dd>
+											<p>给定正整数 $n$，则称映射 $p\colon \{0, 1, \dots, n-1\} \to \{0, 1, \dots, n-1\}$ 是一个<b>$n$ 元排列</b>，当且仅当 $p$ 是双射。换言之，不存在 $i \neq j$ 使得 $p(i) = p(j)$。
+											</p>
+										</dd>
+									</dl>
+									<p>全体 $n$ 元排列构成的集合记为 $S_n$，那么由组合数学的经典结论，有 $|S_n| = n!$。</p>
+									<h2>算法流程</h2>
+									<p>Fisher-Yates 算法的核心是建立 $\{0\} \times \{0, 1\} \times \dots \times \{0, 1, \dots, n-1\}$ 和  $S_n$ 之间的一一对应关系，而后者的均匀分布是平凡的且易于生成：</p>
+									<pre>
+<code>template&lt;class OutIt, class URNG&gt;
+void generate_indices_n(OutIt ind_array, size_t n, URNG &&rng) {
+	for(size_t i = 0; i &lt; n; ++i) {
+		ind_array[i] = rng() % (i + 1);
+	}
+}
+</code>
+									</pre>
+									<p>下面只用考虑怎么基于此数组生成排列。</p>
+									<p>可行的实现方式显然不是唯一的，但是 Fisher-Yates 算法的精妙之处在于：它只用常数极小的 $O(n)$ 时间和 $O(1)$ 的额外空间就足以实现。直接用代码展示更直观：</p>
+									<pre>
+<code>#include&lt;algorithm&gt;
+template&lt;class RanIt, class URNG&gt;
+void my_shuffle_n(RanIt perm, size_t n, URNG &&rng) {
+	for(size_t i = 0; i &lt; n; ++i) {
+		std::swap(perm[i], perm[rng() % (i + 1)]);
+	}
+}
+</code>
+									</pre>
+									<p>如上代码的正确性可以用归纳法简单证明：</p>
+									<ul>
+										<li>如果 $n \le 1$，显然此时的 $n$ 元排列是均匀随机的（因为只有一种可能）。</li>
+										<li>如果 $n \ge 2$，在假设前 $n - 1$ 个数组成的排列是均匀随机生成的前提下，将第 $n$ 个数等概率地与前 $n$ 个数（包括自己）中的一个交换，能够生成所有的 $n$ 元排列且概率完全相等。</li>
+									</ul>
+									<h2>扩展应用</h2>
+									<p>如果要从 $W$ 个数中选取 $n$ 个排成一列，而 $n$ 比较小但 $W$ 特别大时，直接用 Fisher-Yates 算法没有那么多空间存下 $W$ 个数再选取。此时可以适当改造一下避免存取太多的元素。</p>
+									<p>首先需要一个记录排列的类：</p>
+									<pre>
+<code>#include&lt;unordered_map&gt;
+using u64 = unsigned long long;
+
+struct Perm {
+	std::unordered_map&lt;u64, u64&gt; perm;
+
+	u64& operator[](u64 x) {
+		// use perm.find(x) != perm.end() instead of perm.contains(x) before C++20
+		return perm.contains(x)
+			? perm[x]
+			: (perm[x] = x); 
+	}
+};
+</code>
+									</pre>
+									<p>核心之处在于，只有在需要取用对应元素时才去建立对应的节点。此做法可以大幅压缩空间。</p>
+									<p>仿照 Fisher-Yates 算法，但是此时选择与后面的元素交换：</p>
+									<pre>
+<code>#include&lt;algorithm&gt;
+template&lt;class RanIt, class URNG&gt;
+void my_shuffle_n(RanIt dest, size_t n, u64 W, URNG &&rng) {
+	Perm perm;
+	for(size_t i = 0; i &lt; n; ++i) {
+		std::swap(perm[i], perm[rng() % (W - i)]);
+		dest[i] = perm[i];
+	}
+}
+</code>
+									</pre>
+									<p>此做法最多生成 $2n$ 个节点，即可从 $W$ 个元素中取出 $n$ 个排成一列。</p>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Contact -->
+					<section id="contact">
+						<div class="inner">
+							<section>
+								<div class="contact-method">
+									<span class="icon solid alt fa-envelope"></span>
+									<h3>Email</h3>
+									<span>untitledunrevised@qq.com</span>
+								</div>
+							</section>
+						</div>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li><a href="https://github.com/untitledunrevised" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Untitled_unrevised</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
